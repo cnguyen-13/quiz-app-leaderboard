@@ -45,7 +45,7 @@ function QuizPage(props: Props) {
             let selectedAnswer = null;
             for (let i = 0; i < choices.length; i++) {
                 const choice = choices[i];
-                if (choice.classList.contains('active')) {
+                if (choice.classList.contains('list-group-item-info')) {
                     selectedAnswer = choice.textContent;
                     const correctSelectedPair = {
                         correctAnswer: correctAnswer,
@@ -73,9 +73,9 @@ function QuizPage(props: Props) {
 
     return (
         <>
-            <Navbar message={!didGameEnd ? `Good Luck ${playerName}!` : 'End Results'} timer={!didGameEnd ? formatTime(secondsElapsed) : ''} />
+            <Navbar message={!didGameEnd ? `Quiz App | Quiz` : 'Quiz App | End Results'} timer={!didGameEnd ? formatTime(secondsElapsed) : ''} />
             <div className="quiz">
-                <h2 className="text-center mt-3 mb-3">{!didGameEnd ? 'Quiz Page!' : 'Results Page!'}</h2>
+                {/* <h2 className="text-center mt-3 mb-3">{!didGameEnd ? 'Quiz Page!' : 'Results Page!'}</h2> */}
                 {!didGameEnd ?
                     <>
                         {questions.map((question, idx) => {

@@ -20,11 +20,14 @@ function QuestionCard(props: Props) {
         const childrenElements = parentUlElement.childNodes;
         for (let i = 0; i < childrenElements.length; i++) {
             const child = childrenElements[i];
-            child.classList.remove('active')
+            //child.classList.remove('active');
+            child.classList.remove('list-group-item-info');
         }
 
         //Change the clicked item to active
-        e.target.classList.add('active')
+        e.target.classList.add('list-group-item-info');
+        //e.target.classList.add('active');
+
 
     }
     //2 cases: correctAnswer === selectedAnswer && correctAnswer !== selectedAnswer
@@ -49,7 +52,7 @@ function QuestionCard(props: Props) {
                     })
                         : answer_choices.map(choice => {
                             return (
-                                <li onClick={changeActive} className="list-group-item ">
+                                <li onClick={changeActive} className="list-group-item   ">
                                     {decodeHTMLEntities(choice)}
                                 </li>
                             )

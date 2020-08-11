@@ -32,7 +32,7 @@ function App() {
     }
 
     return (
-        <div className="app container ">
+        <div className="app container-fluid">
             {didGameStart ? <QuizPage questions={questions} playerName={player} /> : <SettingsPage startGame={startGame} />}
         </div>
     );
