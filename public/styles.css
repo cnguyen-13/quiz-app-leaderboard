@@ -1,0 +1,19 @@
+.app {
+    padding: 0;
+}
+
+.settings,
+
+.quiz,
+.results {
+    margin-top: 150px;
+}
+
+.margin-top {
+    margin-top: 85px;
+}
+
+
+li {
+    cursor: pointer;
+}

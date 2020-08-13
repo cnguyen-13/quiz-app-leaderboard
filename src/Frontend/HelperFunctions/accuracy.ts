@@ -1,4 +1,4 @@
-import { TOTAL_QUESTIONS } from '../Config/Config';
+import { TOTAL_QUESTIONS } from "../Config/Config";
 
 function accuracy(correct: number): string {
     const accuracy: number = correct / TOTAL_QUESTIONS;
@@ -6,4 +6,4 @@ function accuracy(correct: number): string {
     return `${percentage} %`;
 }
 
-export { accuracy }
+export { accuracy };

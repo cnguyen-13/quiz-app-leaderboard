@@ -7,7 +7,6 @@ function shuffleArray(arr: any[]): any[] {
         newArray[ranIdx] = temp;
     }
     return newArray;
-
 }
 
 export { shuffleArray };
