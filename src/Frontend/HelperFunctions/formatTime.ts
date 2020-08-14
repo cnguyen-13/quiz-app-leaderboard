@@ -5,4 +5,4 @@ const formatTime = (sec: number) => {
     return `${minutes}:${secondsStringed}`;
 };
 
-export { formatTime }
+export { formatTime };

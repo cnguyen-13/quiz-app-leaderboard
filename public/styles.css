@@ -1,0 +1,25 @@
+.app {
+    padding: 0;
+}
+
+.settings,
+.quiz,
+.results {
+    margin-top: 150px;
+}
+
+.margin-top {
+    margin-top: 30px;
+}
+
+li {
+    cursor: pointer;
+}
+
+html {
+    padding: 0;
+}
+
+.settings-page {
+    padding: 0;
+}
