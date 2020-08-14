@@ -16,6 +16,7 @@ interface Props {
 
 function ResultsPage(props: Props) {
     //Questions and CorrectAndSelectedPairs match up idx wise
+    useEffect(() => {}, []);
     const {
         playerName,
         timeElapsed,

@@ -5,6 +5,7 @@ import ResultsPage from "../ResultsPage/ResultsPage";
 import SubmitQuiz from "./SubmitQuiz";
 import { formatTime } from "../../HelperFunctions/formatTime";
 import { TOTAL_QUESTIONS } from "../../Config/Config";
+import { DifficultyType } from "../../Types/Types";
 import Navbar from "./Navbar";
 
 interface Props {
@@ -15,6 +16,9 @@ interface Props {
 function QuizPage(props: Props) {
     const { questions, playerName } = props;
     const [correct, setCorrect] = useState<number>(0);
+    const [difficulty, setDifficulty] = useState<DifficultyType>(
+        DifficultyType["EASY"]
+    );
     const [didGameEnd, setDidGameEnd] = useState<boolean>(false);
     const [secondsElapsed, setSecondsElapsed] = useState<number>(0);
     const [correctAndSelectedPairs, setCorrectAndSelectedPairs] = useState<

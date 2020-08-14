@@ -13,7 +13,17 @@ export interface CorrectAnswerAndUserAnswer {
     userAnswer: string | null;
 }
 
+export interface PostData {
+    difficulty: string;
+    name: string;
+    num_correct: number;
+    percentage: string;
+    time_seconds: number;
+    time_per_question_seconds: number;
+}
+
 export enum DifficultyType {
+    ALL = "all",
     EASY = "easy",
     MEDIUM = "medium",
     HARD = "hard",
