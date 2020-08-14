@@ -26,7 +26,7 @@ function ResultsPage(props: Props) {
     } = props;
 
     return (
-        <div className="results">
+        <div className="container results">
             <h2>Results</h2>
             <p>Player Name: {playerName}</p>
             <p>

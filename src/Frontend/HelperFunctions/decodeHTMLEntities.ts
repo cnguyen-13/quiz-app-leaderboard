@@ -6,6 +6,7 @@ function decodeHTMLEntities(str: string): string {
         ["&amp;", "&"],
         ["&ldquo;", '"'],
         ["&eacute;", "é"],
+        ["&Uuml;", "Ü"],
     ];
     let resultStr: string = str;
     for (let i = 0; i < entities.length; i++) {

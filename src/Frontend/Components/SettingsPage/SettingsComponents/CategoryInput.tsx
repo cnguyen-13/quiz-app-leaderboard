@@ -1,5 +1,5 @@
 import React from "react";
-import { categories } from "../../HelperFunctions/categories";
+import { categories } from "../../../HelperFunctions/categories";
 
 function CategoryInput() {
     return (

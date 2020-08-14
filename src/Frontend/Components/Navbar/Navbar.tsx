@@ -2,21 +2,30 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 interface Props {
-    message: string;
-    timer: string;
+    timer?: string | null;
+    didTimerStart: boolean;
 }
 
 function Navbar(props: Props) {
-    const { message, timer } = props;
+    const { timer, didTimerStart } = props;
+
+    function promptUser() {
+        if (didTimerStart) {
+            prompt(
+                "Are you sure to want to check leaderboards, your quiz will stop!"
+            );
+        }
+    }
 
     return (
         <nav className="container-fluid w-100 navbar navbar-dark bg-dark p-3">
             <div className="container">
-                <h1 className="text-white">{message}</h1>
+                <h1 className="text-white">Quiz App</h1>
+                {timer ? <h2 className="text-white">{timer}</h2> : null}
                 <form className="form-inline">
                     <Link to="/leaderboards">
                         <button
-                            onClick={() => {}}
+                            onClick={promptUser}
                             className="btn btn-primary text-uppercase"
                             type="submit"
                         >
@@ -30,13 +39,3 @@ function Navbar(props: Props) {
 }
 
 export default Navbar;
-{
-    /* 
-<nav className="container-fluid mb-5 p-3 bg-dark text-white fixed-top">
-            <div className="container d-flex justify-content-between align-items-center">
-                <h1>{message}</h1>
-                <p>{timer}</p>
-            </div>
-
-        </nav> */
-}
