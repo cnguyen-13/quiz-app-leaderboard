@@ -19,7 +19,7 @@ function Navbar(props: Props) {
     }
 
     return (
-        <nav className="container-fluid w-100 navbar navbar-dark bg-dark p-3">
+        <nav className="container-fluid w-100 navbar navbar-dark bg-dark p-3 fixed-top">
             <div className="container">
                 <Link to="/">
                     <h1 className="text-white">Quiz App</h1>

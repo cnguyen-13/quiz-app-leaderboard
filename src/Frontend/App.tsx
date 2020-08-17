@@ -73,6 +73,8 @@ function App() {
     }
 
     function submitQuiz() {
+        setIsTimerOn(false);
+        setSecondsElapsed(0);
         let correct = 0;
         const selectedAnswers: CorrectAnswerAndUserAnswer[] = [];
         const playerAnswers = document.querySelectorAll(".user-answers");
@@ -102,8 +104,6 @@ function App() {
 
         //GOOD
         if (selectedAnswers.length === TOTAL_QUESTIONS) {
-            setIsTimerOn(false);
-            setSecondsElapsed(0);
             setCorrect(correct);
             setCorrectAndSelectedPairs(selectedAnswers);
             const data: PostData = {

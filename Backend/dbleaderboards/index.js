@@ -12,32 +12,19 @@ const pool = mysql.createPool({
 
 const db = {};
 
-db.getAllTogether = () => {
+db.getByDifficulty = (difficulty) => {
     return new Promise((resolve, reject) => {
         //queries here
-        pool.query(
-            `SELECT name, num_correct, percentage, time_seconds, time_per_question_seconds FROM easy_leaderboards  
-            UNION 
-            SELECT name, num_correct, percentage, time_seconds, time_per_question_seconds FROM medium_leaderboards
-            UNION 
-            SELECT name, num_correct, percentage, time_seconds, time_per_question_seconds FROM hard_leaderboards 
-            ORDER BY num_correct DESC, time_seconds ASC;`,
-            (err, results) => {
-                if (err) {
-                    return reject(err);
-                }
-                return resolve(results);
-            }
-        );
-    });
-};
+        const difficultyWhereClause =
+            difficulty === "all"
+                ? 'IN ("easy", "medium", "hard")'
+                : `= "${difficulty}"`;
 
-db.getAllFromDifficulty = (difficulty) => {
-    return new Promise((resolve, reject) => {
-        //queries here
         pool.query(
-            `SELECT name, num_correct, percentage, time_seconds, time_per_question_seconds FROM ${difficulty}_leaderboards 
-            ORDER BY num_correct DESC, time_seconds DESC;`,
+            `SELECT name, num_correct, percentage, time_seconds, time_per_question_seconds 
+            FROM leaderboards 
+            WHERE difficulty ${difficultyWhereClause}
+            ORDER BY num_correct DESC, time_seconds ASC;`,
             (err, results) => {
                 if (err) {
                     return reject(err);
@@ -61,15 +48,16 @@ db.postQuiz = (data) => {
         } = data;
 
         pool.query(
-            `INSERT INTO ${difficulty}_leaderboards 
-            (name, num_correct, percentage, time_seconds, time_per_question_seconds) 
-            VALUES (?, ?, ?, ?, ? )`,
+            `INSERT INTO leaderboards 
+            (name, num_correct, percentage, time_seconds, time_per_question_seconds, difficulty) 
+            VALUES (?, ?, ?, ?, ?, ? )`,
             [
                 name,
                 num_correct,
                 percentage,
                 time_seconds,
                 time_per_question_seconds,
+                difficulty,
             ],
             (err, results) => {
                 if (err) {
@@ -80,4 +68,5 @@ db.postQuiz = (data) => {
         );
     });
 };
+
 module.exports = db;

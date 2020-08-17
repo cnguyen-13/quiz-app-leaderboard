@@ -4,8 +4,7 @@ async function getFromLeaderboards(
     difficulty: DifficultyType,
     callback: React.Dispatch<React.SetStateAction<any[]>>
 ) {
-    const difficultyLevel = difficulty === "all" ? "" : difficulty;
-    const endpointUrl = `http://localhost:4000/api/leaderboards/${difficultyLevel}`;
+    const endpointUrl = `http://localhost:4000/api/leaderboards/${difficulty}`;
     try {
         const data = await (await fetch(endpointUrl)).json();
         callback(data);

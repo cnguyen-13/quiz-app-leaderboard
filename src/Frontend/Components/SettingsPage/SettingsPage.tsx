@@ -10,7 +10,7 @@ function SettingsPage(props: Props) {
     const { startGame } = props;
 
     return (
-        <div className="container settings">
+        <div className="container from-navbar-offset-mt">
             <Description />
             <Settings startGame={startGame} />
         </div>

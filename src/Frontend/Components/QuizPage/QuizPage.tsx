@@ -12,7 +12,7 @@ function QuizPage(props: Props) {
     const { questions, submitQuiz } = props;
 
     return (
-        <div className="container quiz">
+        <div className="container from-navbar-offset-mt">
             {questions.map((question, idx) => {
                 return (
                     <QuestionCard question={question} questionNum={idx + 1} />

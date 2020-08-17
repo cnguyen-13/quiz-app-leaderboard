@@ -16,7 +16,7 @@ function Leaderboards(props: Props) {
     }, [difficulty]);
 
     return (
-        <div className="leaderboards container">
+        <div className="container from-navbar-offset-mt">
             <DifficultyInput2 setDifficulty={setDifficulty} />
             <table className="table">
                 <thead className="thead-light">
@@ -25,8 +25,8 @@ function Leaderboards(props: Props) {
                         <th scope="col">Name</th>
                         <th scope="col"># Correct</th>
                         <th scope="col">% Correct</th>
-                        <th scope="col">Elapsed Time(seconds)</th>
-                        <th scope="col">Avg Time Per Question (seconds)</th>
+                        <th scope="col">Time(sec)</th>
+                        <th scope="col">Avg Time(sec)</th>
                     </tr>
                 </thead>
                 <tbody>
