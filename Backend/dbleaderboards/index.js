@@ -1,12 +1,13 @@
 const mysql = require("mysql");
+require("dotenv").config();
 
 const pool = mysql.createPool({
     connectionLimit: 10,
-    host: "localhost",
-    port: "3306",
-    user: "root",
-    password: "Quicksilver13!!@",
-    database: "quiz_app_leaderboards",
+    host: process.env.MYSQL_HOST,
+    port: process.env.MYSQL_PORT,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
 });
 
 const db = {};
@@ -20,7 +21,7 @@ db.getAllTogether = () => {
             SELECT name, num_correct, percentage, time_seconds, time_per_question_seconds FROM medium_leaderboards
             UNION 
             SELECT name, num_correct, percentage, time_seconds, time_per_question_seconds FROM hard_leaderboards 
-            ORDER BY num_correct ASC;`,
+            ORDER BY num_correct DESC, time_seconds ASC;`,
             (err, results) => {
                 if (err) {
                     return reject(err);
@@ -35,7 +36,8 @@ db.getAllFromDifficulty = (difficulty) => {
     return new Promise((resolve, reject) => {
         //queries here
         pool.query(
-            `SELECT name, num_correct, percentage, time_seconds, time_per_question_seconds FROM ${difficulty}_leaderboards`,
+            `SELECT name, num_correct, percentage, time_seconds, time_per_question_seconds FROM ${difficulty}_leaderboards 
+            ORDER BY num_correct DESC, time_seconds DESC;`,
             (err, results) => {
                 if (err) {
                     return reject(err);
@@ -46,7 +48,7 @@ db.getAllFromDifficulty = (difficulty) => {
     });
 };
 
-db.postQuizByDifficulty = (data) => {
+db.postQuiz = (data) => {
     return new Promise((resolve, reject) => {
         //queries here
         const {
@@ -57,8 +59,11 @@ db.postQuizByDifficulty = (data) => {
             time_seconds,
             time_per_question_seconds,
         } = data;
+
         pool.query(
-            `INSERT INTO ${difficulty}_leaderboards (name, num_correct, percentage, time_seconds, time_per_question_seconds) VALUES (?, ?, ?, ?, ? )`,
+            `INSERT INTO ${difficulty}_leaderboards 
+            (name, num_correct, percentage, time_seconds, time_per_question_seconds) 
+            VALUES (?, ?, ?, ?, ? )`,
             [
                 name,
                 num_correct,

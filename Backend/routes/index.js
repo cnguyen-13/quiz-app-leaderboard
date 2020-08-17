@@ -23,9 +23,8 @@ router.get("/:difficulty", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const data = req.body;
-        const sendData = await db.postQuizByDifficulty(data);
-        console.log("POST SUCCESS");
-        res.sendStatus(200).json(sendData);
+        const sendData = await db.postQuiz(data);
+        res.json(sendData);
     } catch (err) {
         res.sendStatus(500).json({ msg: "Server Error" });
     }

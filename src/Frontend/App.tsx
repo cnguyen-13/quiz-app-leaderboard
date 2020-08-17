@@ -6,17 +6,27 @@ import { getQuestions } from "./FetchingData/getQuestions";
 import { Switch, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import ResultsPage from "./Components/ResultsPage/ResultsPage";
+import Leaderboards from "./Components/Leaderboards/Leaderboards";
 import { formatTime } from "./HelperFunctions/formatTime";
+import { accuracy } from "../Frontend/HelperFunctions/accuracy";
+import { averageTimePer } from "../Frontend/HelperFunctions/averageTimePer";
+import { postResults } from "../Frontend/FetchingData/postResults";
 import {
     QuestionType,
     CorrectAnswerAndUserAnswer,
     DifficultyType,
+    PostData,
 } from "./Types/Types";
 
 function App() {
+    //Need Difficulty, stringed percentage, time per quesiton
     const [correct, setCorrect] = useState<number>(0);
     const [questions, setQuestions] = useState<QuestionType[]>([]);
     const [player, setPlayer] = useState<string>("");
+    const [difficulty, setDifficulty] = useState<DifficultyType>(
+        DifficultyType["ALL"]
+    );
+
     //Time
     const [isTimerOn, setIsTimerOn] = useState<boolean>(false);
     const [secondsElapsed, setSecondsElapsed] = useState<number>(0);
@@ -50,6 +60,7 @@ function App() {
         //Values at Inputs
         const playerName: string = playerNameInput.value;
         const playerDifficulty: DifficultyType = playerDifficultyInput.value;
+        setDifficulty(playerDifficulty);
         const playerCategory: string = playerCategoryInput.value;
 
         //Checks for names for no spaces and length
@@ -62,7 +73,6 @@ function App() {
     }
 
     function submitQuiz() {
-        setIsTimerOn(false);
         let correct = 0;
         const selectedAnswers: CorrectAnswerAndUserAnswer[] = [];
         const playerAnswers = document.querySelectorAll(".user-answers");
@@ -92,8 +102,19 @@ function App() {
 
         //GOOD
         if (selectedAnswers.length === TOTAL_QUESTIONS) {
+            setIsTimerOn(false);
+            setSecondsElapsed(0);
             setCorrect(correct);
             setCorrectAndSelectedPairs(selectedAnswers);
+            const data: PostData = {
+                difficulty: difficulty,
+                name: player,
+                num_correct: correct,
+                percentage: accuracy(correct),
+                time_seconds: secondsElapsed,
+                time_per_question_seconds: averageTimePer(secondsElapsed),
+            };
+            postResults(data);
         } else {
             alert("ANSWER ALL QUESTIONS!");
         }
@@ -103,6 +124,7 @@ function App() {
         <div className="app container-fluid">
             <Navbar
                 didTimerStart={isTimerOn}
+                setIsTimerOn={setIsTimerOn}
                 timer={isTimerOn ? formatTime(secondsElapsed) : null}
             />
             <Switch>
@@ -114,6 +136,9 @@ function App() {
                         correct={correct}
                         correctAndSelectedPairs={correctAndSelectedPairs}
                     />
+                </Route>
+                <Route path="/leaderboards">
+                    <Leaderboards />
                 </Route>
                 <Route path="/quiz" exact>
                     <QuizPage questions={questions} submitQuiz={submitQuiz} />

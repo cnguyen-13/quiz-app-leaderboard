@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 interface Props {
     timer?: string | null;
     didTimerStart: boolean;
+    setIsTimerOn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function Navbar(props: Props) {
-    const { timer, didTimerStart } = props;
+    const { timer, didTimerStart, setIsTimerOn } = props;
 
     function promptUser() {
         if (didTimerStart) {
@@ -20,7 +21,10 @@ function Navbar(props: Props) {
     return (
         <nav className="container-fluid w-100 navbar navbar-dark bg-dark p-3">
             <div className="container">
-                <h1 className="text-white">Quiz App</h1>
+                <Link to="/">
+                    <h1 className="text-white">Quiz App</h1>
+                </Link>
+
                 {timer ? <h2 className="text-white">{timer}</h2> : null}
                 <form className="form-inline">
                     <Link to="/leaderboards">
