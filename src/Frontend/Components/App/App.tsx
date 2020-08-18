@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-
 import { TOTAL_QUESTIONS } from "../../Config/Config";
-import { getQuestions } from "../../FetchingData/getQuestions";
-
 import Navbar from "../Navbar/Navbar";
 import SettingsPage from "../SettingsPage/SettingsPage";
 import QuizPage from "../QuizPage/QuizPage";
 import ResultsPage from "../ResultsPage/ResultsPage";
 import Leaderboards from "../Leaderboards/Leaderboards";
+import { postResults, getQuestions } from "../../FetchingData/FetchingData";
+import {
+    QuestionType,
+    AnswerPair,
+    DifficultyType,
+    PostDataType,
+} from "../../Types/Types";
 import {
     accuracy,
     formatTime,
     averageTimePer,
 } from "../../HelperFunctions/HelperFunctions";
-
-import { postResults } from "../../FetchingData/postResults";
-import {
-    QuestionType,
-    AnswerPair,
-    DifficultyType,
-    PostData,
-} from "../../Types/Types";
 
 function App() {
     //STATES
@@ -103,7 +99,7 @@ function App() {
         if (selectedAnswers.length === TOTAL_QUESTIONS) {
             setCorrect(correct);
             setAnswerPairs(selectedAnswers);
-            const data: PostData = {
+            const data: PostDataType = {
                 difficulty: difficulty,
                 name: name,
                 num_correct: correct,
@@ -121,7 +117,6 @@ function App() {
         <div className="app container-fluid">
             <Navbar
                 didTimerStart={isTimerOn}
-                setIsTimerOn={setIsTimerOn}
                 timer={isTimerOn ? formatTime(secondsElapsed) : null}
             />
             <Switch>

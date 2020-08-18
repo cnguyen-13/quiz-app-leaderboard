@@ -1,7 +1,7 @@
 import React from "react";
 import { QuestionType } from "../../Types/Types";
 import QuestionCard from "../QuestionCard/QuestionCard";
-import SubmitQuiz from "./SubmitQuiz";
+import SubmitQuiz from "./QuizPageComponents/SubmitQuizButton";
 
 interface Props {
     questions: QuestionType[];

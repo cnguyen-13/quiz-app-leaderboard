@@ -13,7 +13,7 @@ export interface AnswerPair {
     userAnswer: string | null;
 }
 
-export interface PostData {
+export interface PostDataType {
     difficulty: string;
     name: string;
     num_correct: number;

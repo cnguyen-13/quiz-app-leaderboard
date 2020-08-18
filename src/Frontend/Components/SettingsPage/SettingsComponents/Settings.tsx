@@ -3,7 +3,7 @@ import humaaans from "../../../Images/humaaans 2.png";
 import NameInput from "./NameInput";
 import DifficultyInput from "./DifficultyInput";
 import CategoryInput from "./CategoryInput";
-import SubmitButton from "./SubmitButton";
+import StartGameButton from "./StartGameButton";
 interface Props {
     startGame: any;
 }
@@ -17,7 +17,7 @@ function Settings(props: Props) {
                 <img
                     className="img-fluid mb-5"
                     src={humaaans}
-                    alt="humaaaans picture"
+                    alt="humaaaans"
                 />
             </div>
             <div className="col-12 col-lg-6  order-lg-2 mb-5">
@@ -25,7 +25,7 @@ function Settings(props: Props) {
                 <NameInput />
                 <DifficultyInput />
                 <CategoryInput />
-                <SubmitButton startGame={startGame} />
+                <StartGameButton startGame={startGame} />
             </div>
         </div>
     );

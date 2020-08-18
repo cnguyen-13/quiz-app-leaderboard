@@ -12,7 +12,11 @@ function CategoryInput() {
             </label>
             <select className="d-block form-control" id="player-category">
                 {categories.map((category) => {
-                    return <option value={category[1]}>{category[0]}</option>;
+                    return (
+                        <option key={category[0]} value={category[1]}>
+                            {category[0]}
+                        </option>
+                    );
                 })}
             </select>
         </div>
