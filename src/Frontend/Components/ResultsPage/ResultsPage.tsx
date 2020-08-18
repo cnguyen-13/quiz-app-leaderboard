@@ -15,7 +15,6 @@ interface Props {
 }
 
 function ResultsPage(props: Props) {
-    //Questions and CorrectAndSelectedPairs match up idx wise
     useEffect(() => {}, []);
     const {
         playerName,
@@ -26,7 +25,7 @@ function ResultsPage(props: Props) {
     } = props;
 
     return (
-        <div className="results">
+        <div className="container from-navbar-offset-mt">
             <h2>Results</h2>
             <p>Player Name: {playerName}</p>
             <p>

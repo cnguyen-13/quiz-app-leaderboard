@@ -1,5 +1,5 @@
 import React from "react";
-import humaaans from "../../Images/humaaans.png";
+import humaaans from "../../../Images/humaaans.png";
 
 function Description() {
     return (

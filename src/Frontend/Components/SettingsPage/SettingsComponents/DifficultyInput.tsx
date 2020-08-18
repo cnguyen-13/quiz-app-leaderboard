@@ -1,5 +1,5 @@
 import React from "react";
-import { DifficultyType } from "../../Types/Types";
+import { DifficultyType } from "../../../Types/Types";
 
 function DifficultyInput() {
     return (

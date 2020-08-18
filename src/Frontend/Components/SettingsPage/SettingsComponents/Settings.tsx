@@ -1,5 +1,5 @@
 import React from "react";
-import humaaans from "../../Images/humaaans 2.png";
+import humaaans from "../../../Images/humaaans 2.png";
 import NameInput from "./NameInput";
 import DifficultyInput from "./DifficultyInput";
 import CategoryInput from "./CategoryInput";
