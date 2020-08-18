@@ -10,7 +10,7 @@ function CategoryInput() {
             >
                 Category: <span className="text-danger">*</span>
             </label>
-            <select className="d-block form-control" id="player-category">
+            <select className="d-block form-control" id="category">
                 {categories.map((category) => {
                     return (
                         <option key={category[0]} value={category[1]}>

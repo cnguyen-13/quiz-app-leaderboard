@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { TOTAL_QUESTIONS } from "../../Config/Config";
 import Navbar from "../Navbar/Navbar";
 import SettingsPage from "../SettingsPage/SettingsPage";
@@ -25,6 +25,7 @@ function App() {
     const [secondsElapsed, setSecondsElapsed] = useState<number>(0);
     const [name, setName] = useState<string>("");
     const [isTimerOn, setIsTimerOn] = useState<boolean>(false);
+    const [isValidQuizSubmit, setIsValidQuizSubmit] = useState<boolean>(false);
     const [questions, setQuestions] = useState<QuestionType[]>([]);
     const [answerPairs, setAnswerPairs] = useState<AnswerPair[]>([]);
     const [difficulty, setDifficulty] = useState<DifficultyType>(
@@ -54,7 +55,7 @@ function App() {
         const difficulty: DifficultyType = difficultyInput.value;
         const category: string = categoryInput.value;
 
-        //Checks for names for no spaces and length
+        //Validation / Checks for names for no spaces and length
         if (name.indexOf(" ") === -1 && name.length >= 1) {
             setIsTimerOn(true);
             setName(name);
@@ -66,8 +67,6 @@ function App() {
     }
 
     function submitQuiz() {
-        setIsTimerOn(false);
-        setSecondsElapsed(0);
         let correct = 0;
         const selectedAnswers: AnswerPair[] = [];
         const playerAnswers = document.querySelectorAll(".user-answers");
@@ -95,9 +94,12 @@ function App() {
             }
         }
 
-        //GOOD
+        //Submit Valid Quiz Submission
         if (selectedAnswers.length === TOTAL_QUESTIONS) {
+            setIsTimerOn(false);
+            setSecondsElapsed(0);
             setCorrect(correct);
+            setIsValidQuizSubmit(true);
             setAnswerPairs(selectedAnswers);
             const data: PostDataType = {
                 difficulty: difficulty,
@@ -133,7 +135,14 @@ function App() {
                     <Leaderboards />
                 </Route>
                 <Route path="/quiz" exact>
-                    <QuizPage questions={questions} submitQuiz={submitQuiz} />
+                    {isValidQuizSubmit ? (
+                        <Redirect to="/quiz/results" />
+                    ) : (
+                        <QuizPage
+                            questions={questions}
+                            submitQuiz={submitQuiz}
+                        />
+                    )}
                 </Route>
                 <Route path="/" exact>
                     <SettingsPage startGame={startGame} />

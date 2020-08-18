@@ -1,7 +1,7 @@
 import React from "react";
 import { QuestionType } from "../../Types/Types";
 import QuestionCard from "../QuestionCard/QuestionCard";
-import SubmitQuiz from "./QuizPageComponents/SubmitQuizButton";
+import SubmitQuizButton from "./QuizPageComponents/SubmitQuizButton";
 
 interface Props {
     questions: QuestionType[];
@@ -18,7 +18,7 @@ function QuizPage(props: Props) {
                     <QuestionCard question={question} questionNum={idx + 1} />
                 );
             })}
-            <SubmitQuiz submitQuiz={submitQuiz} />
+            <SubmitQuizButton submitQuiz={submitQuiz} />
         </div>
     );
 }

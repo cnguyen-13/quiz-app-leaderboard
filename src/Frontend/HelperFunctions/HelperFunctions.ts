@@ -1,4 +1,5 @@
 import { TOTAL_QUESTIONS } from "../Config/Config";
+import { entities } from "../Data/HTMLEntities";
 
 function accuracy(correct: number): string {
     const accuracy: number = correct / TOTAL_QUESTIONS;
@@ -30,7 +31,6 @@ function shuffleArray(arr: any[]): any[] {
 }
 
 function decodeHTMLEntities(str: string): string {
-    const entities = require("../Data/HTMLEntities");
     let resultStr: string = str;
     for (let i = 0; i < entities.length; i++) {
         const pair = entities[i];
