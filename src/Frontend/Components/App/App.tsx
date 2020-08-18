@@ -1,38 +1,39 @@
 import React, { useState, useEffect } from "react";
-import SettingsPage from "./Components/SettingsPage/SettingsPage";
-import QuizPage from "./Components/QuizPage/QuizPage";
-import { TOTAL_QUESTIONS } from "./Config/Config";
-import { getQuestions } from "./FetchingData/getQuestions";
 import { Switch, Route } from "react-router-dom";
-import Navbar from "./Components/Navbar/Navbar";
-import ResultsPage from "./Components/ResultsPage/ResultsPage";
-import Leaderboards from "./Components/Leaderboards/Leaderboards";
-import { formatTime } from "./HelperFunctions/formatTime";
-import { accuracy } from "../Frontend/HelperFunctions/accuracy";
-import { averageTimePer } from "../Frontend/HelperFunctions/averageTimePer";
-import { postResults } from "../Frontend/FetchingData/postResults";
+
+import { TOTAL_QUESTIONS } from "../../Config/Config";
+import { getQuestions } from "../../FetchingData/getQuestions";
+
+import Navbar from "../Navbar/Navbar";
+import SettingsPage from "../SettingsPage/SettingsPage";
+import QuizPage from "../QuizPage/QuizPage";
+import ResultsPage from "../ResultsPage/ResultsPage";
+import Leaderboards from "../Leaderboards/Leaderboards";
+import {
+    accuracy,
+    formatTime,
+    averageTimePer,
+} from "../../HelperFunctions/HelperFunctions";
+
+import { postResults } from "../../FetchingData/postResults";
 import {
     QuestionType,
-    CorrectAnswerAndUserAnswer,
+    AnswerPair,
     DifficultyType,
     PostData,
-} from "./Types/Types";
+} from "../../Types/Types";
 
 function App() {
-    //Need Difficulty, stringed percentage, time per quesiton
+    //STATES
     const [correct, setCorrect] = useState<number>(0);
+    const [secondsElapsed, setSecondsElapsed] = useState<number>(0);
+    const [name, setName] = useState<string>("");
+    const [isTimerOn, setIsTimerOn] = useState<boolean>(false);
     const [questions, setQuestions] = useState<QuestionType[]>([]);
-    const [player, setPlayer] = useState<string>("");
+    const [answerPairs, setAnswerPairs] = useState<AnswerPair[]>([]);
     const [difficulty, setDifficulty] = useState<DifficultyType>(
         DifficultyType["ALL"]
     );
-
-    //Time
-    const [isTimerOn, setIsTimerOn] = useState<boolean>(false);
-    const [secondsElapsed, setSecondsElapsed] = useState<number>(0);
-    const [correctAndSelectedPairs, setCorrectAndSelectedPairs] = useState<
-        CorrectAnswerAndUserAnswer[]
-    >([]);
 
     useEffect(() => {
         let timeInterval: any = isTimerOn
@@ -47,26 +48,22 @@ function App() {
     }, [isTimerOn, secondsElapsed]);
 
     function startGame() {
-        //Inputs Elements
-        setIsTimerOn(true);
-        const playerNameInput: any = document.querySelector("#player-name");
-        const playerDifficultyInput: any = document.querySelector(
-            "#player-difficulty"
-        );
-        const playerCategoryInput: any = document.querySelector(
-            "#player-category"
-        );
+        //Input Elements
+        const nameInput: any = document.querySelector("#name");
+        const difficultyInput: any = document.querySelector("#difficulty");
+        const categoryInput: any = document.querySelector("#category");
 
         //Values at Inputs
-        const playerName: string = playerNameInput.value;
-        const playerDifficulty: DifficultyType = playerDifficultyInput.value;
-        setDifficulty(playerDifficulty);
-        const playerCategory: string = playerCategoryInput.value;
+        const name: string = nameInput.value;
+        const difficulty: DifficultyType = difficultyInput.value;
+        const category: string = categoryInput.value;
 
         //Checks for names for no spaces and length
-        if (playerName.indexOf(" ") === -1 && playerName.length >= 1) {
-            setPlayer(playerName);
-            getQuestions(playerDifficulty, playerCategory, setQuestions);
+        if (name.indexOf(" ") === -1 && name.length >= 1) {
+            setIsTimerOn(true);
+            setName(name);
+            setDifficulty(difficulty);
+            getQuestions(difficulty, category, setQuestions);
         } else {
             alert("Name must have no spaces and be 1 character long");
         }
@@ -76,7 +73,7 @@ function App() {
         setIsTimerOn(false);
         setSecondsElapsed(0);
         let correct = 0;
-        const selectedAnswers: CorrectAnswerAndUserAnswer[] = [];
+        const selectedAnswers: AnswerPair[] = [];
         const playerAnswers = document.querySelectorAll(".user-answers");
 
         for (let i = 0; i < playerAnswers.length; i++) {
@@ -105,10 +102,10 @@ function App() {
         //GOOD
         if (selectedAnswers.length === TOTAL_QUESTIONS) {
             setCorrect(correct);
-            setCorrectAndSelectedPairs(selectedAnswers);
+            setAnswerPairs(selectedAnswers);
             const data: PostData = {
                 difficulty: difficulty,
-                name: player,
+                name: name,
                 num_correct: correct,
                 percentage: accuracy(correct),
                 time_seconds: secondsElapsed,
@@ -131,10 +128,10 @@ function App() {
                 <Route path="/quiz/results" exact>
                     <ResultsPage
                         questions={questions}
-                        playerName={player}
+                        name={name}
                         timeElapsed={secondsElapsed}
                         correct={correct}
-                        correctAndSelectedPairs={correctAndSelectedPairs}
+                        answerPairs={answerPairs}
                     />
                 </Route>
                 <Route path="/leaderboards">

@@ -4,7 +4,7 @@ const db = require("../dbleaderboards");
 
 router.get("/:difficulty", async (req, res) => {
     try {
-        const data = await db.getByDifficulty(req.params.difficulty);
+        const data = await db.getRankings(req.params.difficulty);
         res.json(data);
     } catch (err) {
         res.sendStatus(500).json({ msg: "Server Error" });
@@ -14,7 +14,7 @@ router.get("/:difficulty", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const data = req.body;
-        const sendData = await db.postQuiz(data);
+        const sendData = await db.postQuizResults(data);
         res.json(sendData);
     } catch (err) {
         res.sendStatus(500).json({ msg: "Server Error" });

@@ -12,9 +12,10 @@ const pool = mysql.createPool({
 
 const db = {};
 
-db.getByDifficulty = (difficulty) => {
+//Gets sorted results from database
+db.getRankings = (difficulty) => {
     return new Promise((resolve, reject) => {
-        //queries here
+        //Sets up the WHERE filter clause in the query
         const difficultyWhereClause =
             difficulty === "all"
                 ? 'IN ("easy", "medium", "hard")'
@@ -35,29 +36,20 @@ db.getByDifficulty = (difficulty) => {
     });
 };
 
-db.postQuiz = (data) => {
+//Posts quiz results into database
+db.postQuizResults = (data) => {
     return new Promise((resolve, reject) => {
-        //queries here
-        const {
-            difficulty,
-            name,
-            num_correct,
-            percentage,
-            time_seconds,
-            time_per_question_seconds,
-        } = data;
-
         pool.query(
             `INSERT INTO leaderboards 
             (name, num_correct, percentage, time_seconds, time_per_question_seconds, difficulty) 
             VALUES (?, ?, ?, ?, ?, ? )`,
             [
-                name,
-                num_correct,
-                percentage,
-                time_seconds,
-                time_per_question_seconds,
-                difficulty,
+                data.name,
+                data.num_correct,
+                data.percentage,
+                data.time_seconds,
+                data.time_per_question_seconds,
+                data.difficulty,
             ],
             (err, results) => {
                 if (err) {

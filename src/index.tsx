@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./Frontend/App";
+import App from "./Frontend/Components/App/App";
 import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
