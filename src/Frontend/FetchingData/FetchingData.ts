@@ -2,19 +2,18 @@ import { DifficultyType, QuestionType, PostDataType } from "./../Types/Types";
 import { TOTAL_QUESTIONS } from "../Config/Config";
 import { shuffleArray } from "../HelperFunctions/HelperFunctions";
 
+const protocol = window.location.protocol;
+const hostName = window.location.hostname;
+const port = require("../../Backend/serverconfig");
+
 //GETs questions from the opentdb API
 async function getQuestions(
     difficulty: DifficultyType,
     category: string,
     callback: React.Dispatch<React.SetStateAction<QuestionType[]>>
 ) {
-    //Fetch Data
-    const data = await (
-        await fetch(
-            `https://opentdb.com/api.php?amount=${TOTAL_QUESTIONS}&difficulty=${difficulty}${category}`
-        )
-    ).json();
-
+    const endpointUrl = `https://opentdb.com/api.php?amount=${TOTAL_QUESTIONS}&difficulty=${difficulty}${category}`;
+    const data = await (await fetch(endpointUrl)).json();
     const questionsArray: QuestionType[] = data["results"];
 
     //Adds property answer_choices, just incorrect answers and correct answer together, shuffled
@@ -33,7 +32,7 @@ async function getFromLeaderboards(
     difficulty: DifficultyType,
     callback: React.Dispatch<React.SetStateAction<any[]>>
 ) {
-    const endpointUrl = `http://localhost:4000/api/leaderboards/${difficulty}`;
+    const endpointUrl = `${protocol}//${hostName}:${port}/api/leaderboards/${difficulty}`;
     try {
         const data = await (await fetch(endpointUrl)).json();
         callback(data);
@@ -44,6 +43,7 @@ async function getFromLeaderboards(
 
 //POSTs quiz results to the database
 async function postResults(data: PostDataType) {
+    const endpointUrl = `${protocol}//${hostName}:${port}/api/leaderboards/`;
     const postSettings = {
         method: "POST",
         headers: {
@@ -52,7 +52,7 @@ async function postResults(data: PostDataType) {
         body: JSON.stringify(data),
     };
 
-    fetch("http://localhost:4000/api/leaderboards/", postSettings);
+    fetch(endpointUrl, postSettings);
 }
 
 export { getFromLeaderboards, getQuestions, postResults };

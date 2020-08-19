@@ -1,9 +1,9 @@
 import React from "react";
 import humaaans from "../../../Images/humaaans 2.png";
-import NameInput from "./NameInput";
-import DifficultyInput from "./DifficultyInput";
-import CategoryInput from "./CategoryInput";
-import StartGameButton from "./StartGameButton";
+import NameInput from "./SettingsComponents/NameInput";
+import DifficultyInput from "./SettingsComponents/DifficultyInput";
+import CategoryInput from "./SettingsComponents/CategoryInput";
+import StartGameButton from "./SettingsComponents/StartGameButton";
 interface Props {
     startGame: any;
 }
