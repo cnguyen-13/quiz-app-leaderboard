@@ -8,12 +8,12 @@ export interface QuestionType {
     correct_answer: string;
 }
 
-export interface AnswerPair {
+export interface AnswerPairType {
     correctAnswer: string | null;
     userAnswer: string | null;
 }
 
-export interface PostData {
+export interface PostDataType {
     difficulty: string;
     name: string;
     num_correct: number;

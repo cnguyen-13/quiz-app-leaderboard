@@ -19,11 +19,7 @@ function Description() {
                 </div>
             </div>
             <div className="col-12 col-lg-6">
-                <img
-                    className="img-fluid"
-                    src={humaaans}
-                    alt="humaaaans picture"
-                />
+                <img className="img-fluid" src={humaaans} alt="humaaaans" />
             </div>
         </div>
     );

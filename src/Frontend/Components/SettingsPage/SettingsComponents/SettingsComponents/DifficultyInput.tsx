@@ -1,5 +1,5 @@
 import React from "react";
-import { DifficultyType } from "../../../Types/Types";
+import { DifficultyType } from "../../../../Types/Types";
 
 function DifficultyInput() {
     return (
@@ -10,7 +10,7 @@ function DifficultyInput() {
             >
                 Difficulty: <span className="text-danger">*</span>
             </label>
-            <select className="d-block form-control" id="player-difficulty">
+            <select className="d-block form-control" id="difficulty">
                 <option value={DifficultyType["EASY"]}>Easy</option>
                 <option value={DifficultyType["MEDIUM"]}>Medium</option>
                 <option value={DifficultyType["HARD"]}>Hard</option>

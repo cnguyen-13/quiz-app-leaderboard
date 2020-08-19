@@ -4,11 +4,10 @@ import { Link } from "react-router-dom";
 interface Props {
     timer?: string | null;
     didTimerStart: boolean;
-    setIsTimerOn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function Navbar(props: Props) {
-    const { timer, didTimerStart, setIsTimerOn } = props;
+    const { timer, didTimerStart } = props;
 
     function promptUser() {
         if (didTimerStart) {

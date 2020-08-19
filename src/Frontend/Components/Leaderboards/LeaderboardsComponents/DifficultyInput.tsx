@@ -1,11 +1,11 @@
 import React from "react";
-import { DifficultyType } from "../../Types/Types";
+import { DifficultyType } from "../../../Types/Types";
 
 interface Props {
     setDifficulty: React.Dispatch<React.SetStateAction<DifficultyType>>;
 }
 
-function DifficultyInput2(props: Props) {
+function DifficultyInput(props: Props) {
     const { setDifficulty } = props;
 
     const changeDifficulty = (e: any): void => {
@@ -34,4 +34,4 @@ function DifficultyInput2(props: Props) {
     );
 }
 
-export default DifficultyInput2;
+export default DifficultyInput;

@@ -1,5 +1,5 @@
 import React from "react";
-import { categories } from "../../../Data/categories";
+import { categories } from "../../../../Data/categories";
 
 function CategoryInput() {
     return (
@@ -10,9 +10,13 @@ function CategoryInput() {
             >
                 Category: <span className="text-danger">*</span>
             </label>
-            <select className="d-block form-control" id="player-category">
+            <select className="d-block form-control" id="category">
                 {categories.map((category) => {
-                    return <option value={category[1]}>{category[0]}</option>;
+                    return (
+                        <option key={category[0]} value={category[1]}>
+                            {category[0]}
+                        </option>
+                    );
                 })}
             </select>
         </div>

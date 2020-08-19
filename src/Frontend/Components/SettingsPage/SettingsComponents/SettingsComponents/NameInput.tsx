@@ -9,7 +9,7 @@ function NameInput() {
             <input
                 className="d-block form-control"
                 type="text"
-                id="player-name"
+                id="name"
                 placeholder="Your name"
             />
         </div>

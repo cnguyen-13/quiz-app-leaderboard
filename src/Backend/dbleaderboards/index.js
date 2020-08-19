@@ -10,6 +10,7 @@ const pool = mysql.createPool({
     database: process.env.MYSQL_DATABASE,
 });
 
+//Holds database functions
 const db = {};
 
 //Gets sorted results from database
