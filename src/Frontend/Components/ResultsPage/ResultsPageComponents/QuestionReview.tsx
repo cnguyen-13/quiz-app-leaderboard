@@ -1,10 +1,10 @@
 import React from "react";
 import QuestionCard from "../../QuestionCard/QuestionCard";
-import { QuestionType, AnswerPair } from "../../../Types/Types";
+import { QuestionType, AnswerPairType } from "../../../Types/Types";
 
 interface Props {
     questions: QuestionType[];
-    answerPairs: AnswerPair[];
+    answerPairs: AnswerPairType[];
 }
 
 function QuestionReview(props: Props) {

@@ -9,7 +9,7 @@ import Leaderboards from "../Leaderboards/Leaderboards";
 import { postResults, getQuestions } from "../../FetchingData/FetchingData";
 import {
     QuestionType,
-    AnswerPair,
+    AnswerPairType,
     DifficultyType,
     PostDataType,
 } from "../../Types/Types";
@@ -19,6 +19,7 @@ import {
     averageTimePer,
 } from "../../HelperFunctions/HelperFunctions";
 
+//RESTART THE TIMER ON A SUCCESSFUL POST
 function App() {
     //STATES
     const [correct, setCorrect] = useState<number>(0);
@@ -27,7 +28,7 @@ function App() {
     const [isTimerOn, setIsTimerOn] = useState<boolean>(false);
     const [isValidQuizSubmit, setIsValidQuizSubmit] = useState<boolean>(false);
     const [questions, setQuestions] = useState<QuestionType[]>([]);
-    const [answerPairs, setAnswerPairs] = useState<AnswerPair[]>([]);
+    const [answerPairs, setAnswerPairs] = useState<AnswerPairType[]>([]);
     const [difficulty, setDifficulty] = useState<DifficultyType>(
         DifficultyType["ALL"]
     );
@@ -57,6 +58,7 @@ function App() {
 
         //Validation / Checks for names for no spaces and length
         if (name.indexOf(" ") === -1 && name.length >= 1) {
+            setSecondsElapsed(0);
             setIsTimerOn(true);
             setName(name);
             setDifficulty(difficulty);
@@ -66,41 +68,59 @@ function App() {
         }
     }
 
-    function submitQuiz() {
-        let correct = 0;
-        const selectedAnswers: AnswerPair[] = [];
-        const playerAnswers = document.querySelectorAll(".user-answers");
+    //Returns an array of selected and correct answer object pairs
+    function gatherAnswers(): AnswerPairType[] {
+        const answerPairings: AnswerPairType[] = [];
+        const answerChoicesGroups = document.querySelectorAll(".user-answers");
 
-        for (let i = 0; i < playerAnswers.length; i++) {
+        for (let i = 0; i < answerChoicesGroups.length; i++) {
             const correctAnswer = questions[i].correct_answer;
-            const possibleAnswers = playerAnswers[i];
-            const choices: HTMLInputElement[] = Array.from(
-                possibleAnswers.querySelectorAll(".list-group-item")
+            const answerChoicesGroup = answerChoicesGroups[i];
+            const answerChoices: HTMLInputElement[] = Array.from(
+                answerChoicesGroup.querySelectorAll(".list-group-item")
             );
-            let selectedAnswer = null;
-            for (let i = 0; i < choices.length; i++) {
-                const choice = choices[i];
+
+            for (let i = 0; i < answerChoices.length; i++) {
+                const choice = answerChoices[i];
                 if (choice.classList.contains("list-group-item-info")) {
-                    selectedAnswer = choice.textContent;
-                    const correctSelectedPair = {
+                    const selectedAnswer = choice.textContent;
+                    const answerPair = {
                         correctAnswer: correctAnswer,
                         userAnswer: selectedAnswer,
                     };
-                    selectedAnswers.push(correctSelectedPair);
+                    answerPairings.push(answerPair);
                 }
-            }
-            if (correctAnswer === selectedAnswer) {
-                correct++;
             }
         }
 
+        return answerPairings;
+    }
+
+    //Returns the # of correct answers selected
+    function countCorrect(answerPairings: AnswerPairType[]): number {
+        let correct = 0;
+        for (let i = 0; i < answerPairings.length; i++) {
+            const pair = answerPairings[i];
+            const correctAnswer = pair.correctAnswer;
+            const userAnswer = pair.userAnswer;
+            if (correctAnswer === userAnswer) {
+                correct++;
+            }
+        }
+        return correct;
+    }
+
+    //Validates that all questions are answered and POSTs to database
+    function submitQuiz() {
+        const answerPairings = gatherAnswers();
+        const correct = countCorrect(answerPairings);
+
         //Submit Valid Quiz Submission
-        if (selectedAnswers.length === TOTAL_QUESTIONS) {
+        if (answerPairings.length === TOTAL_QUESTIONS) {
             setIsTimerOn(false);
-            setSecondsElapsed(0);
             setCorrect(correct);
             setIsValidQuizSubmit(true);
-            setAnswerPairs(selectedAnswers);
+            setAnswerPairs(answerPairings);
             const data: PostDataType = {
                 difficulty: difficulty,
                 name: name,

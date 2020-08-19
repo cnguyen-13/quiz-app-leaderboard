@@ -19,7 +19,7 @@ function QuestionAnswerChoices(props: Props) {
 
     return (
         <div className="container-fluid">
-            <ul className="row list-group user-answers ">
+            <ul className="row list-group user-answers">
                 {showAnswers
                     ? answer_choices.map((choice) => {
                           let bgColor = "";
@@ -31,7 +31,7 @@ function QuestionAnswerChoices(props: Props) {
                           )
                               bgColor = "bg-danger text-white";
                           return (
-                              <li className={`list-group-item  ${bgColor} `}>
+                              <li className={`list-group-item ${bgColor}`}>
                                   {decodeHTMLEntities(choice)}
                               </li>
                           );
@@ -40,7 +40,7 @@ function QuestionAnswerChoices(props: Props) {
                           return (
                               <li
                                   onClick={changeActive}
-                                  className="list-group-item   "
+                                  className="list-group-item"
                               >
                                   {decodeHTMLEntities(choice)}
                               </li>

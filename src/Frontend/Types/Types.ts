@@ -8,7 +8,7 @@ export interface QuestionType {
     correct_answer: string;
 }
 
-export interface AnswerPair {
+export interface AnswerPairType {
     correctAnswer: string | null;
     userAnswer: string | null;
 }

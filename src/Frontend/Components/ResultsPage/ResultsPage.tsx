@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import Results from "./ResultsPageComponents/Results";
 import QuestionReview from "./ResultsPageComponents/QuestionReview";
-import { QuestionType, AnswerPair } from "../../Types/Types";
+import { QuestionType, AnswerPairType } from "../../Types/Types";
 
 interface Props {
     name: string;
     timeElapsed: number;
     correct: number;
     questions: QuestionType[];
-    answerPairs: AnswerPair[];
+    answerPairs: AnswerPairType[];
 }
 
 function ResultsPage(props: Props) {
